@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 
+import algorithms.mazeGenerators.Maze3d;
 import model.Model;
 import view.View;
 
@@ -88,6 +89,103 @@ public class Presenter implements Observer {
 					}
 				} else {
 					view.printMsg("Invalid input");
+				}
+			}
+			if (o == model) {
+				// local variables
+				String userCommand = (String) arg;
+				String[] tempArray = userCommand.split(" ");
+
+				// switch-case for first word
+				switch (tempArray[0]) {
+				case "mazeIsReady":
+					// get the maze & display the maze and start position.
+					Maze3d maze3d = (Maze3d) model.getUserCommand(userCommand);
+					view.displayMaze(maze3d);
+					view.displayPosition(maze3d.getStartPosition());
+					break;
+
+				case "displayCrossSectionBy":
+					view.displayCrossSectionBy((int[][]) model.getUserCommand(userCommand));
+					break;
+
+				case "saveMaze":
+					view.printMsg("maze is saved successfully in file " + (String) model.getUserCommand(userCommand));
+					break;
+
+				case "loadMaze":
+					Maze3d newMaze3d = (Maze3d) model.getUserCommand(userCommand);
+					view.displayMaze(newMaze3d);
+					view.displayPosition(newMaze3d.getStartPosition());
+					break;
+
+				case "solutionIsReady":
+					view.displaySolution(model.getMazeSolution((String) model.getUserCommand(userCommand)));
+					break;
+
+				case "loadZip":
+					view.printMsg("The maze has loaded from " + (String) model.getUserCommand(userCommand));
+					break;
+
+				case "saveZip":
+					view.printMsg("file is saved to " + (String) model.getUserCommand(userCommand));
+					break;
+
+				case "move":
+					view.displayMaze(model.getMaze3d((String) model.getUserCommand(userCommand)));
+					view.displayPosition(model.getPosition((String) model.getUserCommand(userCommand)));
+					break;
+
+				case "exit":
+					view.printMsg("The system is shut down");
+					break;
+
+				case "null":
+					view.printMsg("Maze is null");
+					break;
+
+				case "Invalid":
+					// another switch-case for all problems.
+					switch (tempArray[1]) {
+
+					case "parameters":
+						view.printMsg("Invalid parameters");
+						break;
+
+					case "index":
+						view.printMsg("Invalid index");
+						break;
+
+					case "file":
+						view.printMsg("The file " + (String) model.getUserCommand(userCommand) + " isn't exist");
+						break;
+
+					case "compress":
+						view.printMsg("Cannot compress the " + (String) model.getUserCommand(userCommand));
+						break;
+
+					case "maze":
+						view.printMsg("Error with " + (String) model.getUserCommand(userCommand) + " maze");
+						break;
+
+					case "algorithm":
+						view.printMsg("Invalid algorithm");
+						break;
+
+					case "input":
+						view.printMsg("Invalid input");
+						break;
+
+					default:
+						view.printMsg("Invalid input");
+						break;
+					}
+					break;
+
+				default:
+					view.printMsg("Invalid command");
+					break;
+
 				}
 			}
 		}
