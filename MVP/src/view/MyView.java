@@ -14,8 +14,11 @@ import algorithms.search.Solution;
 import presenter.Command;
 import presenter.Properties;
 
+
+// TODO: Auto-generated Javadoc
 /**
- * The Class MyView that extends CommonView
+ * The Class MyView that extends CommonView.
+ *
  * @author Nati Sadeh & Eli Salem
  */
 public class MyView extends CommonView {
@@ -34,8 +37,10 @@ public class MyView extends CommonView {
 		this.threadPool = Executors.newCachedThreadPool();
 	}
 	
+	
 	/**
-	 * The method will call the start method in the CLI class
+	 * Start method that running a thread, the method will receive commands from the user
+	 * the view will notify the presenter that command has been received 
 	 */
 	@Override
 	public void start() {
@@ -45,6 +50,19 @@ public class MyView extends CommonView {
 			@Override
 			public void run() {
 				try {
+					
+					out.println("               ***********");
+					out.println("               *MAIN MENU*");
+					out.println("               ***********");
+					out.println("(1). dir <path>");
+					out.println("(2). generate <maze name> <floors number> <columns number> <rows number>");
+					out.println("(3). display <maze name>");
+					out.println("(4). display cross section <dim> <maze name> <index>");
+					out.println("(5). save <file name>");
+					out.println("(6). load <file name> <maze name>");
+					out.println("(7). solve <maze name> <algorithm>");
+					out.println("(8). display solution <maze name>");
+					out.println("(9). exit");
 					// ask user for command
 					out.println("please enter command");
 					out.flush();
@@ -75,8 +93,10 @@ public class MyView extends CommonView {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see view.CommonView#printMsg(java.lang.String)
+	/**
+	 * Prints the msg.
+	 *
+	 * @param msg the msg
 	 */
 	@Override
 	public void printMsg(String msg) {
@@ -91,8 +111,10 @@ public class MyView extends CommonView {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see view.CommonView#displayStringArray(java.lang.String[])
+	/**
+	 * Display string array.
+	 *
+	 * @param strings the strings
 	 */
 	@Override
 	public void displayStringArray(String[] strings) {
@@ -109,16 +131,19 @@ public class MyView extends CommonView {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see view.CommonView#setCommand(java.util.HashMap)
+	/**
+	 * Sets the command.
+	 *
+	 * @param commandHash the command hash
 	 */
 	@Override
 	public void setCommand(HashMap<String, Command> commandHash) {
 		this.commandHash = commandHash;
 	}
 
-
-
+	/**
+	 * Method that will be responsible to display  a 2D mazeCrossSection 
+	 */
 	@Override
 	public void displayCrossSectionBy(int[][] maze2d) {
 		//display all maze2d 
@@ -131,22 +156,34 @@ public class MyView extends CommonView {
 		}
 	}
 
+	/**
+	 * Method that will be responsible to display a solution
+	 */
 	@Override
 	public void displaySolution(Solution<Position> solution) {
 		solution.printSolution();
 	}
 
+	/**
+	 * Method that will be responsible to display a maze
+	 */
 	@Override
 	public void displayMaze(Maze3d maze3d) {
 		maze3d.printMaze();
 	}
 
+	/**
+	 * Method that will be responsible to display position
+	 */
 	@Override
 	public void displayPosition(Position position) {
 		out.println(position);
 		out.flush();
 	}
 
+	/**
+	 * Method that will be responsible to identify if we working on CLI or GUI
+	 */
 	@Override
 	public void setProperties(Properties properties) {
 		if(!(properties.getChooseView().equals("command line"))) {
@@ -154,8 +191,9 @@ public class MyView extends CommonView {
 			notifyObservers("replaceUserInterface");
 		}	
 	}
-	/* (non-Javadoc)
-	 * @see view.CommonView#exit()
+	
+	/**
+	 * Exit.
 	 */
 	@Override
 	public void exit() {

@@ -46,6 +46,7 @@ public class DisplayCommand extends CommonCommand {
 		else {
 			mazeName = tempArray[0];
 			presenter.getView().displayMaze(presenter.getModel().getMaze3d(mazeName));
+			presenter.getView().printMsg("Start position is: ");
 			presenter.getView().displayPosition(presenter.getModel().getMaze3d(mazeName).getStartPosition());
 		}
 	}

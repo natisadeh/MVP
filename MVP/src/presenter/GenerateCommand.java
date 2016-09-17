@@ -7,7 +7,7 @@ public class GenerateCommand extends CommonCommand {
 	}
 	/**
 	 * Override "doCommand" and implements this method.
-	 * This method will tell the controller that the user want to generate a maze
+	 * This method will tell the presenter that the user want to generate a maze
 	 */
 	@Override
 	public void doCommand(String string) {

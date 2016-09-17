@@ -5,7 +5,10 @@ public class MovesCommand extends CommonCommand {
 	public MovesCommand(Presenter presenter) {
 		super(presenter);
 	}
-
+/**
+ * The method will get a move command 
+ * the presenter will call the model to do that command
+ */
 	@Override
 	public void doCommand(String string) {
 		// switch-case for command (move)

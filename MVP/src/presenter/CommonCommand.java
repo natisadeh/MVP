@@ -1,5 +1,6 @@
 package presenter;
 
+import java.io.PrintWriter;
 
 /**
  * The Common Command is an abstract class that implements Command.
@@ -11,6 +12,7 @@ public abstract class CommonCommand implements Command {
 
 	/** Variable. */
 	protected Presenter presenter;
+	protected PrintWriter out;
 	
 	/**
 	 * Instantiates a new common command.
@@ -21,10 +23,8 @@ public abstract class CommonCommand implements Command {
 		super();
 		this.presenter = presenter;
 	}
+
 	
-	/* (non-Javadoc)
-	 * @see controller.Command#doCommand(java.lang.String)
-	 */
 	public abstract void doCommand(String string);
 
 }

@@ -8,13 +8,26 @@ import algorithms.mazeGenerators.Maze3d;
 import model.Model;
 import view.View;
 
+/**
+ * The Class Presenter.
+ * @author Nati Sadeh & Eli Salem
+ */
 public class Presenter implements Observer {
 	
+	/**
+	 * Variables
+	 */
 	private Model model;
 	private View view;
 	private HashMap<String, Command> commandHash;
 	private Properties properties;
 	
+	/**
+	 * C'tor 
+	 * set the view
+	 * set the model
+	 * creating new properties and set them
+	 */
 	public Presenter (View view, Model model){
 		this.view = view;
 		this.model = model;
@@ -22,6 +35,10 @@ public class Presenter implements Observer {
 		properties.defaultProperties();
 		model.setProperties(properties);
 		
+		
+		/**
+		 * Command hash which hold the commands
+		 */
 		this.commandHash = new HashMap<String, Command>();
 		commandHash.put("dir", new DirCommand(this));
 		commandHash.put("generate", new GenerateCommand(this));
@@ -66,6 +83,12 @@ public class Presenter implements Observer {
 				this.model.setProperties(properties);
 		}
 
+		/**
+		 * Implement the update method from observer
+		 * the method will get two parameters observable (model or view) , arg (the command we like to  do)
+		 * checks if the observable is model or view
+		 * and do the command 
+		 */
 		@Override
 		public void update(Observable o, Object arg) {
 		// if the observable is the view.
@@ -91,7 +114,9 @@ public class Presenter implements Observer {
 					view.printMsg("Invalid input");
 				}
 			}
-			if (o == model) {
+		}
+
+			else if (o == model) {
 				// local variables
 				String userCommand = (String) arg;
 				String[] tempArray = userCommand.split(" ");
@@ -99,10 +124,10 @@ public class Presenter implements Observer {
 				// switch-case for first word
 				switch (tempArray[0]) {
 				case "mazeIsReady":
-					// get the maze & display the maze and start position.
-					Maze3d maze3d = (Maze3d) model.getUserCommand(userCommand);
-					view.displayMaze(maze3d);
-					view.displayPosition(maze3d.getStartPosition());
+//					Maze3d maze3d = (Maze3d) model.getUserCommand(userCommand);
+					view.printMsg("maze " + properties.getMazeName() + " is ready!" );
+//					view.displayMaze(maze3d);
+//					view.displayPosition(maze3d.getStartPosition());
 					break;
 
 				case "displayCrossSectionBy":
@@ -116,11 +141,14 @@ public class Presenter implements Observer {
 				case "loadMaze":
 					Maze3d newMaze3d = (Maze3d) model.getUserCommand(userCommand);
 					view.displayMaze(newMaze3d);
+					view.printMsg("Start position: ");
 					view.displayPosition(newMaze3d.getStartPosition());
+					
 					break;
 
 				case "solutionIsReady":
-					view.displaySolution(model.getMazeSolution((String) model.getUserCommand(userCommand)));
+					view.printMsg("The solution for your maze is ready!");
+//					view.displaySolution(model.getMazeSolution((String) model.getUserCommand(userCommand)));
 					break;
 
 				case "loadZip":
@@ -137,7 +165,7 @@ public class Presenter implements Observer {
 					break;
 
 				case "exit":
-					view.printMsg("The system is shut down");
+					view.printMsg("The system is shutting down");
 					break;
 
 				case "null":
@@ -188,6 +216,5 @@ public class Presenter implements Observer {
 
 				}
 			}
-		}
 	}
 }

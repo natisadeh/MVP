@@ -16,12 +16,17 @@ import presenter.Properties;
  * @author Nati Sadeh & Eli Salem
  */
 public abstract class CommonView extends Observable implements View {
-
+	/**
+	 * Variables
+	 */
 	protected BufferedReader in;
 	protected PrintWriter out;
 	protected HashMap<String, Command> commandHash;
 	protected HashMap<Command, Object> objectHash;
 	
+	/**
+	 * Constructor
+	 */
 	public CommonView(BufferedReader in, PrintWriter out) {
 		super();
 		this.in = in;
@@ -30,6 +35,9 @@ public abstract class CommonView extends Observable implements View {
 		this.objectHash = new HashMap<Command,Object>();
 	}
 	
+	/**
+	 * View's methods that will be implemented in MyVie class
+	 */
 	public abstract void start();
 	public abstract void printMsg(String msg);
 	public abstract void displayStringArray(String[] strings); 

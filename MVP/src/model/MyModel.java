@@ -67,11 +67,13 @@ public class MyModel extends CommonModel {
 	/**
 	 * This method generate a new maze 
 	 * The method will run a new thread from the threadpool when creating a new maze
+	 * The method will get its parameters from the properties by default
 	 */
 	@Override
 	public void generate(String name) {
 		// local variables
-				String mazeName = properties.getMazeName();
+				properties.setMazeName(name);
+//				String mazeName = properties.getMazeName();
 				int z = properties.getZ();
 				int y = properties.getY();
 				int x = properties.getX();
@@ -88,8 +90,8 @@ public class MyModel extends CommonModel {
 				});
 
 				try {
-					hashMaze.put(mazeName, futureMaze.get());
-					hashPosition.put(mazeName, futureMaze.get().getStartPosition());
+					hashMaze.put(name, futureMaze.get());
+					hashPosition.put(name, futureMaze.get().getStartPosition());
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				} catch (ExecutionException e) {
@@ -97,7 +99,7 @@ public class MyModel extends CommonModel {
 				}
 
 				// set notify observers name
-				setNotify("mazeIsReady", getMaze3d(mazeName));
+				setNotify("mazeIsReady", getMaze3d(name));
 	}
 
 	/**
@@ -151,9 +153,9 @@ public class MyModel extends CommonModel {
 		String name = properties.getMazeName();
 		Maze3d maze3d = hashMaze.get(name);
 		
-		if (maze3d == null){
+		if (fileName == null){
 			setChanged();
-		    notifyObservers("Maze is not available");
+		    notifyObservers("Invalid file");
 		}
 		else {
 			try {
@@ -216,6 +218,7 @@ public class MyModel extends CommonModel {
 	 * This method will solve a maze
 	 * The method will check in the hashmap if the maze exist and solve him by a given algorithm
 	 * The method run a thread when solving the maze
+	 * The method will get the parameters of the algorithm from the properties
 	 */
 	@Override
 	public void solveMaze(String name) {
@@ -276,14 +279,20 @@ public class MyModel extends CommonModel {
 		setNotify("solutionIsReady", mazeName);
 	}
 
-
+	/**
+	 * A 3dMaze getter
+	 * The maze will be given from the hashMaze that the maze will be stored in
+	 */
 	@Override
 	public Maze3d getMaze3d(String string) {
 		Maze3d maze3d = hashMaze.get(string);
 		return maze3d;
 	}
 
-
+	/**
+	 * A solution getter
+	 * The solution will be given from the hashSolution
+	 */
 	@Override
 	public Solution<Position> getMazeSolution(String name) {
 		// local variables
@@ -300,7 +309,10 @@ public class MyModel extends CommonModel {
 		return solution;
 	}
 
-
+	/**
+	 * SaveToZip method that will save a maze and his solution to a zip file
+	 * after saving to the zip the method will notify the observer
+	 */
 	@Override
 	public void saveToZip() {
 		try {
@@ -320,7 +332,10 @@ public class MyModel extends CommonModel {
 		}
 	}
 
-
+	/**
+	 * LoadFromZip method that will load a maze and his solution from a zip file
+	 * after loading from zip the method will notify the observer
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void loadFromZip() {
@@ -342,7 +357,9 @@ public class MyModel extends CommonModel {
 		}
 	}
 
-
+	/**
+	 * Inform the user that a moveUp action has been accrued (+1 in Z Axis)
+	 */
 	@Override
 	public void moveUp() {
 		// local variables
@@ -362,7 +379,9 @@ public class MyModel extends CommonModel {
 
 	}
 
-
+	/**
+	 * Inform the user that a moveDown action has been accrued (-1 in Z Axis)
+	 */
 	@Override
 	public void moveDown() {
 		// local variables
@@ -382,7 +401,9 @@ public class MyModel extends CommonModel {
 
 	}
 
-
+	/**
+	 * Inform the user that a moveLeft action has been accrued (-1 in X Axis)
+	 */
 	@Override
 	public void moveLeft() {
 		// local variables
@@ -402,7 +423,9 @@ public class MyModel extends CommonModel {
 
 	}
 
-
+	/**
+	 * Inform the user that a moveRight action has been accrued (+1 in X Axis)
+	 */
 	@Override
 	public void moveRight() {
 		// local variables
@@ -422,7 +445,9 @@ public class MyModel extends CommonModel {
 		
 	}
 
-
+	/**
+	 * Inform the user that a moveBack action has been accrued (-1 in Y Axis)
+	 */
 	@Override
 	public void moveBack() {
 		// local variables
@@ -441,7 +466,10 @@ public class MyModel extends CommonModel {
 		}
 		
 	}
-
+	
+	/**
+	 * Inform the user that a moveForward action has been accrued (+1 in Y Axis)
+	 */
 	@Override
 	public void moveForward() {
 		// local variables
@@ -461,6 +489,10 @@ public class MyModel extends CommonModel {
 		
 	}
 
+	/**
+	 * A position getter
+	 * The method will get a maze name and return the current position of the maze
+	 */
 	@Override
 	public Position getPosition(String name) {
 		return hashPosition.get(name);
@@ -468,7 +500,7 @@ public class MyModel extends CommonModel {
 	
 	/**
 	 * This method will close the model work
-	 * This method will inform the controller that the model has stop
+	 * This method will notify the presenter that the model has stop
 	 * This method will close any thread that worked in the model
 	 */
 	@Override

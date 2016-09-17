@@ -8,7 +8,7 @@ public class ExitCommand extends CommonCommand {
 
 	/**
 	 * Override "doCommand" and implements this method.
-	 * This method will tell the controller to exit
+	 * This method will tell the presenter to exit
 	 */
 	@Override
 	public void doCommand(String string) {

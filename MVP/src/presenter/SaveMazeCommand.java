@@ -8,7 +8,8 @@ public class SaveMazeCommand extends CommonCommand {
 	
 	/**
 	 * Override "doCommand" and implements this method.
-	 * This method will tell the controller that the user want to save the maze
+	 * This method will tell the presenter that the user want to save the maze
+	 * the presenter will call the model that will save the file (zip or normal)
 	 */
 	@Override
 	public void doCommand(String string) {

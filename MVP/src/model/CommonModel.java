@@ -25,6 +25,9 @@ public abstract class CommonModel extends Observable implements Model {
 	protected ExecutorService threadPool;
 	protected Properties properties;
 	
+	/**
+	 * Constructor
+	 */
 	public CommonModel() {
 		this.hashMaze = new HashMap<String, Maze3d>();
 		this.hashCommand = new HashMap<String, Object>();
@@ -34,7 +37,7 @@ public abstract class CommonModel extends Observable implements Model {
 	}
 	
 	/**
-	 * this method is notify observers : massage and object.
+	 * this method is notify observers : command and object.
 	 * @param command
 	 * @param object
 	 */
